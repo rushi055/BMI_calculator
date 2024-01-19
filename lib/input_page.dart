@@ -3,9 +3,16 @@ import 'package:bmi_calculator/reusableCard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'constants.dart';
+
 const bottomContainerColour = Color(0xFFEB1555);
 const activecardcolour = Color(0xFF1D1E33);
 const inactivecardcolour = Color(0xFF111328);
+
+enum Gender {
+  male,
+  female,
+}
 
 class InputPage extends StatefulWidget {
   @override
@@ -13,29 +20,11 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleCardColour = inactivecardcolour;
-  Color femaleCardColour = inactivecardcolour;
+  var selectedgender;
+  int height = 180;
+  int weight = 60;
+  int age = 20;
 
-  // 1 = male, 2 = female
-  void updateColour(int gender) {
-    if (gender == 1) {
-      if (maleCardColour == inactivecardcolour) {
-        maleCardColour = activecardcolour;
-        femaleCardColour = inactivecardcolour;
-      } else {
-        maleCardColour = inactivecardcolour;
-      }
-    }
-    if (gender == 2) {
-      if (femaleCardColour == inactivecardcolour) {
-        femaleCardColour = activecardcolour;
-        maleCardColour = inactivecardcolour;
-      } else {
-        femaleCardColour = inactivecardcolour;
-      }
-      // Add logic for female card color update if needed
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +41,14 @@ class _InputPageState extends State<InputPage> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        updateColour(1);
+                        selectedgender = Gender.male;
                       });
                     },
                     child: Builder(
                       builder: (context) => ReusableCard(
-                        colour: maleCardColour,
+                        colour: selectedgender == Gender.male
+                            ? activecardcolour
+                            : inactivecardcolour,
                         cardChild: IconContent(
                           icon: FontAwesomeIcons.mars,
                           label: "Male",
@@ -68,14 +59,19 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: GestureDetector(
+                    //we can also remove gesture detector and add in ReusableCard page by adding a function of onPress just same as
+                    // we add cardChild and color so we dont have to write Gesture Detector multiple time
+                    // we can just add onefunction of onPress(can give whatever name we like) and it will work
                     onTap: () {
                       setState(() {
-                        updateColour(2);
+                        selectedgender = Gender.female;
                       });
                     },
                     child: Builder(
                       builder: (context) => ReusableCard(
-                        colour: femaleCardColour,
+                        colour: selectedgender == Gender.female
+                            ? activecardcolour
+                            : inactivecardcolour,
                         cardChild: IconContent(
                           icon: FontAwesomeIcons.venus,
                           label: "Female",
@@ -87,14 +83,47 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          // Expanded(
-          //   child: ReusableCard(
-          //     colour: activecardcolour,
-          //     cardChild: IconContent(
-          //
-          //     ),
-          //   ),
-          // ),
+          Expanded(
+            child: ReusableCard(
+              colour: kActiveCardColour,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'HEIGHT',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: kLabelTextStyle,
+                      )
+                    ],
+                  ),
+
+               Slider(
+                      value: height.toDouble(),
+                      min: 120.0,
+                      max: 220.0,
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.round();
+                        });
+                      },
+                    ),
+
+                ],
+              ),
+            ),
+          ),
           // Expanded(
           //   child: Row(
           //     children: [
