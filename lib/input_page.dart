@@ -25,7 +25,6 @@ class _InputPageState extends State<InputPage> {
   int weight = 60;
   int age = 20;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +60,7 @@ class _InputPageState extends State<InputPage> {
                   child: GestureDetector(
                     //we can also remove gesture detector and add in ReusableCard page by adding a function of onPress just same as
                     // we add cardChild and color so we dont have to write Gesture Detector multiple time
-                    // we can just add onefunction of onPress(can give whatever name we like) and it will work
+                    // we can just add one function of onPress(can give whatever name we like) and it will work
                     onTap: () {
                       setState(() {
                         selectedgender = Gender.female;
@@ -108,40 +107,154 @@ class _InputPageState extends State<InputPage> {
                       )
                     ],
                   ),
-
-               Slider(
-                      value: height.toDouble(),
-                      min: 120.0,
-                      max: 220.0,
-                      onChanged: (double newValue) {
-                        setState(() {
-                          height = newValue.round();
-                        });
-                      },
-                    ),
-
+                  Slider(
+                    value: height.toDouble(),
+                    min: 120.0,
+                    max: 220.0,
+                    divisions: 10,
+                    thumbColor: Colors.white,
+                    label: height.toString(),
+                    onChanged: (double newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
           ),
-          // Expanded(
-          //   child: Row(
-          //     children: [
-          //       Expanded(
-          //         child: ReusableCard(
-          //           colour: activecardcolour,
-          //           cardChild: IconContent(), // Column
-          //         ),
-          //       ),
-          //       Expanded(
-          //         child: ReusableCard(
-          //           colour: activecardcolour,
-          //           cardChild: IconContent(),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: ReusableCard(
+                    colour: kActiveCardColour,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'WEIGHT',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RawMaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                              shape: CircleBorder(),
+                              fillColor: Colors.yellow,
+                              elevation: 0.0,
+                              child: Icon(
+                                FontAwesomeIcons.minus,
+                                color: Colors.white,
+                              ),
+                              constraints: BoxConstraints.tightFor(
+                                width: 56.0,
+                                height: 56.0,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RawMaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                              shape: CircleBorder(),
+                              fillColor: Colors.yellow,
+                              elevation: 0.0,
+                              child: Icon(
+                                FontAwesomeIcons.plus,
+                                color: Colors.white,
+                              ),
+                              constraints: BoxConstraints.tightFor(
+                                width: 56.0,
+                                height: 56.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ReusableCard(
+                    colour: kActiveCardColour,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'AGE',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RawMaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                              shape: CircleBorder(),
+                              fillColor: Colors.yellow,
+                              elevation: 0.0,
+                              child: Icon(
+                                FontAwesomeIcons.minus,
+                                color: Colors.white,
+                              ),
+                              constraints: BoxConstraints.tightFor(
+                                width: 56.0,
+                                height: 56.0,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RawMaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                              shape: CircleBorder(),
+                              fillColor: Colors.yellow,
+                              elevation: 0.0,
+                              child: Icon(
+                                FontAwesomeIcons.plus,
+                                color: Colors.white,
+                              ),
+                              constraints: BoxConstraints.tightFor(
+                                width: 56.0,
+                                height: 56.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           Container(
             margin: EdgeInsets.only(top: 20),
             width: double.infinity,
